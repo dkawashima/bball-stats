@@ -1,0 +1,1283 @@
+package bbStatsPackage;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Arrays;
+public class StatKeeper {
+	private String realname;
+	Game[] games = new Game[100];
+	private Game average;
+	int numofgames =0;
+	private double averagepts = -1;
+	private double averagefgm =-1;
+	private double averagefga=-1;
+	private double averagefgp = -1;
+	private double averagerebs=-1;
+	private double averageasts=-1;
+	private double averagestls=-1;
+	private double averageblks=-1;
+	private double averagetos=-1;
+	private double averagegmscore=-1;
+	private double averageasttoratio=-1;
+	private double averagethreefgm =-1;
+	private double averagethreefga=-1;
+	private double averagethreefgp=-1;
+	private double averageftm=-1;
+	private double averagefta=-1;
+	private double averageftp =-1;
+	private double[] averages = {averagepts, averagefgp, averagerebs, averageasts,averagestls,averageblks, averagetos,averagegmscore, averageasttoratio,averagefgm, averagefga,averagethreefgm
+	,averagethreefga,averagethreefgp,
+	averageftm,
+	averagefta, averageftp};
+	String[] gamenames = new String[100];
+	private String[] statsString = { "Pts", "FGP", "Rebs", "Asts", "Stls", "Blks", "TOs","GmSc", "A/TO", "FGM", "FGA", "3PM", "3PA", "FTM", "FTA", "FTP"};
+		public StatKeeper(String name){
+		realname = name;
+	}
+		public String getGameLog(){
+			String a = games[0].getGameHeader() + "\n";
+			String b = games[0].getGameHeader();
+			String[] gameHeaders = new String [numofgames];
+			
+			for (int i =0; i<numofgames; i++){
+				gameHeaders[i] = games[i].getGameHeader();
+			}
+			for (int i = 0; i < numofgames; i++){
+				if (!gameHeaders[i].equals(b)){
+					a+= (gameHeaders[i] + "\n");
+					b = gameHeaders[i];
+				}
+				a += games[i].getGame();
+				
+				a += "\n";
+		
+	}
+			return a;
+		}
+		public String getNumberofDoubleDoublesstr(){
+			int count = 0;
+		
+	for (int i = 0; i < numofgames; i++){
+			
+	if (games[i].isDoubleDouble1()){
+					count ++;
+				}
+			}
+			if (count == 1){
+				return "1 Double-Double";
+			}
+			if (count > 1){
+				return count + " Double-Doubles";
+			}
+			return null;
+		}
+		public String getNumberofTripleDoublesstr(){
+			int count = 0;
+			for (int i = 0; i < numofgames; i++){
+				if (games[i].isTripleDouble()){
+					count ++;
+				}
+			}
+			if (count == 1){
+				return "1 Triple-Double";
+		
+		}
+			if (count > 1){
+				return count + " Triple-Doubles";
+			}
+			return null;
+		}
+		public double getNumberofTripleDoubles(){
+			int count = 0;
+			for (int i = 0; i < numofgames; i++){
+				if (games[i].isTripleDouble()){
+					count ++;
+				}
+			}
+			return count;
+		}
+		public double getNumberofDoubleDoubles(){
+			int count = 0;
+			for (int i = 0; i < numofgames; i++){
+				if (games[i].isDoubleDouble1()){
+					count ++;
+				}
+			}
+			return count;
+		}
+		public static StatKeeper[] sortGameScores(StatKeeper[] a){
+		
+	int i, j, minIndex;
+			  StatKeeper tmp;
+		      int n = a.length;
+		      for (i = 0; i < n - 1; i++) {
+		            minIndex = i;
+		            for (j = i + 1; j < n; j++)
+		                  if (a[j].getAvgGameScore() < a[minIndex].getAvgGameScore())
+		                        minIndex = j;
+		            if (minIndex != i) {
+		                  tmp = a[i];
+		                  a[i] = a[minIndex];
+		                  a[minIndex] = tmp;
+		            }
+		      }
+		
+			return a;
+			
+		}
+		public static String getHighestGameScore(StatKeeper[] a){
+		double maximum = -50;
+		String name = null;
+		String versus = null;
+			for (int i = 0; i< a.length; i++){
+			if (StatKeeper.getHighGameScore(a[i]) > maximum){
+				 maximum =StatKeeper.getHighGameScore(a[i]);
+				 name = a[i].getName();
+				 versus = StatKeeper.getHighGameScoreversus(a[i]);
+			}
+
+		}
+			DecimalFormat df = new DecimalFormat("##.#");
+			df.setRoundingMode(RoundingMode.HALF_EVEN);
+			String maximum1 = df.format(maximum);
+			return "The highest single game score is: " + maximum1 + " by: " + name+ " " + versus;
+		}
+		public static String getHighestPoints(StatKeeper[] a){
+
+	
+	
+	double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighPoints(a[i]) > maximum){
+					 maximum =StatKeeper.getHighPoints(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighPointsversus(a[i]);
+				}else {
+				if (StatKeeper.getHighPoints(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighPoints(a[i]);
+					 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighPointsversus(a[i]);
+				}}
+			
+		
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+
+				if (name2 != null && maximum12 == maximum){
+				
+	return "The highest single game points total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+				}
+				return "The highest single game points total is: " + maximum1 + " by: " + name+ " " + versus;
+		
+	
+	}
+		public static String getHighestFGA(StatKeeper[] a){
+			double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighFGAs(a[i]) > maximum){
+					 maximum =StatKeeper.getHighFGAs(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighFGAversus(a[i]);
+				}else {
+				if (StatKeeper.getHighFGAs(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighFGAs(a[i]);
+					 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighFGAversus(a[i]);
+				}}
+			
+	
+			}
+			
+	DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				if (name2 != null && maximum12 == maximum){
+					return "The highest single game FGA total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+				}
+				return "The highest single game FGA total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestFGM(StatKeeper[] a){
+			double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+		
+	String name2 = null;
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighFGMs(a[i]) > maximum){
+					 maximum =StatKeeper.getHighFGMs(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighFGMversus(a[i]);
+				}else {
+				if (StatKeeper.getHighFGMs(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighFGMs(a[i]);
+		
+			 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighFGMversus(a[i]);
+				}}
+				
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+	
+			if (name2 != null && maximum12 == maximum){
+					return "The highest single game FGM total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+				}
+				return "The highest single game FGM total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestRebs(StatKeeper[] a){
+			double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+		
+	
+	String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighRebs(a[i]) > maximum){
+					 maximum =StatKeeper.getHighRebs(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighRebsversus(a[i]);
+				}else {
+				if (StatKeeper.getHighRebs(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighRebs(a[i]);
+					 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighRebsversus(a[i]);
+				}}
+				
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				if (name2 != null && maximum12 == maximum){
+					return "The highest single game rebounds total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+			
+	}
+				return "The highest single game rebounds total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestAsts(StatKeeper[] a){
+			double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighAsts(a[i]) > maximum){
+					 maximum =StatKeeper.getHighAsts(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighAstsversus(a[i]);
+				}else {
+				if (StatKeeper.getHighAsts(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighAsts(a[i]);
+				
+		 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighAstsversus(a[i]);
+				}}
+				
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				if (name2 != null && maximum12 == maximum){
+				
+	return "The highest single game assists total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+				}
+				return "The highest single game assists total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestStls(StatKeeper[] a){
+			double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighStls(a[i]) > maximum){
+					 maximum =StatKeeper.getHighStls(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighStlsversus(a[i]);
+				}else {
+				if (StatKeeper.getHighStls(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighStls(a[i]);
+					 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighStlsversus(a[i]);
+				}}
+				
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+
+	
+			if (name2 != null && maximum12 == maximum){
+					return "The highest single game steals total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+				}
+				return "The highest single game steals total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestBlks(StatKeeper[] a){
+		
+		double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighBlks(a[i]) > maximum){
+					 maximum =StatKeeper.getHighBlks(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighBlksversus(a[i]);
+				}else {
+				if (StatKeeper.getHighBlks(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighBlks(a[i]);
+					 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighBlksversus(a[i]);
+				}}
+				
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				if (name2 != null && maximum12 == maximum){
+				
+	return "The highest single game blocks total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+				}
+				return "The highest single game blocks total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestTOs(StatKeeper[] a){
+			double maximum = -50;
+			double maximum12 = -50;
+			String name = null;
+			String name2 = null;
+
+			String versus = null;
+			String versus2 = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getHighTOs(a[i]) > maximum){
+					 maximum =StatKeeper.getHighTOs(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getHighTOsversus(a[i]);
+				}else {
+				if (StatKeeper.getHighTOs(a[i]) == maximum){
+					 maximum12 =StatKeeper.getHighTOs(a[i]);
+					 name2 = a[i].getName();
+					 versus2 = StatKeeper.getHighTOsversus(a[i]);
+				}}
+				
+			}
+			
+	DecimalFormat df = new DecimalFormat("##.#");
+			
+		df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+			
+	if (name2 != null && maximum12 == maximum){
+					return "The highest single game turnover total is: " + maximum1 + " by: " + name+ " " + versus + " and also by: " + name2 + " "+ versus2;
+			
+		}
+				return "The highest single game turnover total is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		
+		
+		
+		public static String getLowestGameScore(StatKeeper[] a){
+			double minimum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (StatKeeper.getLowGameScore(a[i]) < minimum){
+					 minimum =StatKeeper.getLowGameScore(a[i]);
+					 name = a[i].getName();
+					 versus = StatKeeper.getLowGameScoreversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String minimum1 = df.format(minimum);
+				return "The lowest single game score is: " + minimum1 + " by: " + name + " " + versus;
+			}
+		public static double getHighGameScore(StatKeeper a){
+		
+	double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getGameScore() > maximum){
+					maximum = a.games[i].getGameScore();
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighPoints(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getPts() > maximum){
+					maximum = a.games[i].getPts();
+				}
+			}}
+			return maximum;
+	
+	}
+	
+	public static double getHighFGAs(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+			
+	if (a.games[i] != null){
+				if (a.games[i].getFGA() > maximum){
+					maximum = a.games[i].getFGA();
+				}
+			}}
+			return maximum;
+		}
+	
+	public static double getHighFGMs(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getFGM() > maximum){
+					maximum = a.games[i].getFGM();
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighRebs(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+			
+	if (a.games[i] != null){
+				if (a.games[i].getRebs() > maximum){
+					maximum = a.games[i].getRebs();
+			
+	}
+			}}
+			return maximum;
+		}
+
+		public static double getHighAsts(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getAst() > maximum){
+					maximum = a.games[i].getAst();
+			
+	}
+			}}
+			return maximum;
+		}
+		public static double getHighStls(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+			
+	if (a.games[i] != null){
+				if (a.games[i].getStls() > maximum){
+					maximum = a.games[i].getStls();
+				}
+			}}
+			return maximum;
+		}
+
+		public static double getHighBlks(StatKeeper a){
+			double maximum = -50;
+	
+		for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getBlks() > maximum){
+					maximum = a.games[i].getBlks();
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighTOs(StatKeeper a){
+			double maximum = -50;
+			for (int i =0; i< a.games.length; i++){
+			
+	if (a.games[i] != null){
+				if (a.games[i].getTos() > maximum){
+					maximum = a.games[i].getTos();
+				}
+			}}
+			return maximum;
+		}
+	
+	public static double getLowGameScore(StatKeeper a){
+			double minimum = 50;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getGameScore() < minimum){
+					minimum = a.games[i].getGameScore();
+			
+	}
+			}}
+	
+	
+	return minimum;
+		}
+		public static String getHighGameScoreversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+	
+		for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getGameScore() > maximum){
+					maximum = a.games[i].getGameScore();
+				
+		name = a.games[i].getName();
+				}
+			}}
+			return name;
+		}
+		public static String getHighPointsversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getPts() > maximum){
+					maximum = a.games[i].getPts();
+					name = a.games[i].getName();
+				}
+			}}
+		
+	return name;
+		}
+		public static String getHighFGAversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getFGA() > maximum){
+				
+	maximum = a.games[i].getFGA();
+					name = a.games[i].getName();
+			
+		}
+			}}
+		
+	return name;
+		}
+	
+	public static String getHighFGMversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getFGM() > maximum){
+					maximum = a.games[i].getFGM();
+					name = a.games[i].getName();
+				}
+			}}
+			return name;
+
+	
+	}
+		public static String getHighRebsversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getRebs() > maximum){
+					maximum = a.games[i].getRebs();
+					name = a.games[i].getName();
+				}
+			}}
+		
+	return name;
+		}
+		public static String getHighAstsversus(StatKeeper a){
+			double maximum = -50;
+		
+	String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getAst() > maximum){
+					maximum = a.games[i].getAst();
+					name = a.games[i].getName();
+				}
+			}}
+			return name;
+	
+	}
+		public static String getHighStlsversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getStls() > maximum){
+					maximum = a.games[i].getStls();
+					name = a.games[i].getName();
+				}
+			}}
+			return name;
+		}
+		public static String getHighBlksversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getBlks() > maximum){
+					maximum = a.games[i].getBlks();
+					name = a.games[i].getName();
+			
+		}
+			}}
+			return name;
+		}
+		public static String getHighTOsversus(StatKeeper a){
+			double maximum = -50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getTos() > maximum){
+					maximum = a.games[i].getTos();
+					name = a.games[i].getName();
+				}
+		
+	}}
+			return name;
+		}
+		public static String getLowGameScoreversus(StatKeeper a){
+			double minimum = 50;
+			String name = null;
+			for (int i =0; i< a.games.length; i++){
+				if (a.games[i] != null){
+				if (a.games[i].getGameScore() < minimum){
+					minimum = a.games[i].getGameScore();
+					name = a.games[i].getName();
+				}
+			}}
+			return name;
+		}
+		public static double getLeagueFGP(StatKeeper[] a){
+			double FGM =0;
+			double FGA = 0;
+			for (int i =0; i< a.length; i++){
+				FGM += a[i].getAvgFGM()* a[i].numofgames;
+				FGA += a[i].getAvgFGA()* a[i].numofgames;
+			}
+			return FGM/FGA;
+		}
+		public void addGame(double pts, double fgm, double fga, double rebs, double asts, double stls, double blks, double tos, String name){
+
+			Game game1 = new Game(pts, fgm, fga, rebs, asts, stls, blks, tos, name);
+		
+		for (int i = 0; i < games.length; i++){
+			if (games[i]== null){
+			
+	games[i] = game1;
+				numofgames++;
+			
+	
+	break;}
+				
+				
+			}
+			for (int j = 0; j < gamenames.length; j++){
+				if (gamenames[j]==(null)){
+					gamenames[j] = name;
+				
+	break;
+					
+				}
+			
+		}}
+		public void addGame(String name, String DNP){
+			Game game1 = new Game(name, DNP);
+			for (int i = 0; i < games.length; i++){
+				if (games[i]== null){
+				
+		games[i] = game1;
+					numofgames++;
+				
+		
+		break;}
+					
+					
+				}
+				for (int j = 0; j < gamenames.length; j++){
+					if (gamenames[j]==(null)){
+						gamenames[j] = name;
+					
+		break;
+						
+					}
+				
+			}
+		}
+		public void addGame(double pts, double fgm, double fga, double rebs, double asts, double stls, double blks, double tos, double gamefactor, String name){
+
+			Game game1 = new Game(pts, fgm, fga, rebs, asts, stls, blks, tos, gamefactor, name);
+		
+		for (int i = 0; i < games.length; i++){
+			if (games[i]== null){
+			
+	games[i] = game1;
+				numofgames++;
+			
+	
+	break;}
+				
+				
+		
+	}
+			for (int j = 0; j < gamenames.length; j++){
+				if (gamenames[j]==(null)){
+					gamenames[j] = name;
+				
+	break;
+					
+				}
+			
+		}}
+		public void addGame(double pts, double fgm, double fga, double threefgm, double threefga, double ftm, double fta, String name){
+
+			Game game1 = new Game(pts, fgm, fga, threefgm, threefga, ftm, fta, name);
+		
+		for (int i = 0; i < games.length; i++){
+			if (games[i]== null){
+			
+	games[i] = game1;
+				numofgames++;
+			
+		break;}
+			
+			
+		}
+		for (int j = 0; j < gamenames.length; j++){
+			if (gamenames[j]==(null)){
+				gamenames[j] = name;
+				break;
+				
+			}
+		
+	}}
+		
+	public void addGame(double pts, double fgm, double fga, double rebs, double asts, double stls, double blks, double tos, double threefgm, double threefga, double ftm, double fta, String name){
+	
+	
+		Game game1 = new Game(pts, fgm, fga,rebs, asts, stls, blks, tos,threefgm, threefga, ftm, fta, name );
+		
+		for (int i = 0; i < games.length; i++){
+			if (games[i]== null){
+				games[i] = game1;
+				numofgames++;
+			
+		break;}
+			
+			
+		}
+		for (int j = 0; j < gamenames.length; j++){
+			if (gamenames[j]==(null)){
+				gamenames[j] = name;
+				break;
+				
+			}
+		
+	}
+	}
+	public void addGameNHVar(double pts, double fgm,  double rebs, double asts, double stls, double blks, double threefgm, double ftm, double fta, String name){
+		
+		
+		Game game1 = new Game(pts, fgm,rebs, asts, stls, blks, threefgm, ftm, fta, name, "a" );
+		
+		for (int i = 0; i < games.length; i++){
+			if (games[i]== null){
+				games[i] = game1;
+				numofgames++;
+			
+		break;}
+			
+			
+		}
+		for (int j = 0; j < gamenames.length; j++){
+			if (gamenames[j]==(null)){
+				gamenames[j] = name;
+				break;
+				
+			}
+		
+	}
+	}
+		
+		
+		
+		public Game[] getGameArray(){
+			return games;
+		}
+		public String getAverageHeader(){
+			String gameHeader= String.format("%-17s", "Name");
+			 double countpts= 0;
+			 double countfgm= 0;
+			 double countfga= 0;
+			 double countfgp= 0;
+			 double countrebs= 0;
+			 double countasts= 0;
+			 double countstls= 0;
+			 double countblks= 0;
+			 double counttos= 0;
+			 double countgmscores= 0;
+			 double countasttoratio= 0;
+			 double countthreefgm = 0;
+			 double countthreefga= 0;
+			 double countftm= 0;
+			 double countfta= 0;
+			 double countftp = 0;
+			 
+			for (int i = 0; i< numofgames; i ++){
+				if (games[i].getPts() != -1 && countpts ==0){
+					countpts++;
+				}
+				if (games[i].getFGP() != -1 && countfgp ==0){
+					countfgp++;
+				}
+				if (games[i].getRebs() != -1 && countrebs ==0){
+
+					countrebs++;
+				}
+				if (games[i].getAst() != -1 && countasts ==0){
+
+					countasts++;
+				}
+				if (games[i].getStls() != -1 && countstls ==0){
+
+					countstls++;
+				}
+				if (games[i].getBlks() != -1 && countblks ==0){
+
+				
+	countblks++;
+				}
+				if (games[i].getTos() != -1 && counttos ==0){
+
+					counttos++;
+				}
+				if (games[i].getGameScore() != -1 && countgmscores ==0){
+
+					countgmscores++;
+				}
+				if (games[i].getAsttoTORatio() != -1 && countasttoratio ==0){
+
+					countasttoratio++;
+				}
+				if (games[i].getFGM() != -1 && countfgm ==0){
+
+					countfgm++;
+				}
+				if (games[i].getFGA() != -1 && countfga ==0){
+				
+					countfga++;
+				}
+				if (games[i].getFTM() != -1 && countftm ==0){
+				
+					countftm++;
+				}
+				if (games[i].getFTA() != -1 && countfta ==0){
+					
+					countfta++;
+				}
+				if (games[i].getFTP() != -1 && countftp ==0){
+					
+					countftp++;
+				}
+				if (games[i].getThreeFGM() != -1 && countthreefgm ==0){
+					
+					countthreefgm++;
+				}
+				if (games[i].getThreeFGA() != -1 && countthreefga ==0){
+				
+	
+					countthreefga++;
+				}
+				
+				
+			}
+			double[] counts = { countpts, countfgp, countrebs, countasts, countstls,countblks,counttos,countgmscores, countasttoratio, countfgm, countfga,countthreefgm,countthreefga, countftm,countfta, countftp};
+			for (int i = 0; i < counts.length; i++){
+				if (counts[i] == 1){
+					
+					gameHeader += String.format("%-5s", statsString[i]);}
+			}
+	if (1 *1 == 1){
+		return gameHeader;
+	}
+			String t = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s","Name", "Pts", "FGP", "Rebs", "Asts", "Stls", "Blks", "TOs", "GSc", "A/TO", "FGM","FGA");
+		
+			
+			return t; 
+			
+	
+	}
+		public String getName(){
+			return realname;
+		}
+		public static String getLeagueAverages(StatKeeper[] a){
+			double totalpts = 0;
+			double totalast =0;
+			double totalrebs=0;
+		
+	double totalFGM=0;
+			double totalFGA=0;
+			double totalstl=0;
+			double totalblk=0;
+			double totaltos=0;
+			double totalgms=0;
+			double totalgamesplayed = 0;
+			for (int i =0; i< a.length; i++){
+				totalpts += a[i].getAvgPts()* (double) a[i].numofgames;
+				totalast += a[i].getAvgAsts()* (double) a[i].numofgames;
+				totalrebs += a[i].getAvgRebs()* (double) a[i].numofgames;
+				totalFGM += a[i].getAvgFGM()* (double) a[i].numofgames;
+				totalFGA += a[i].getAvgFGA()* (double) a[i].numofgames;
+				totalstl += a[i].getAvgStls()* (double) a[i].numofgames;
+				totalblk += a[i].getAvgBlks()* (double) a[i].numofgames;
+				totaltos += a[i].getAvgTos()* (double) a[i].numofgames;
+				totalgms += a[i].getAvgGameScore()* (double) a[i].numofgames;
+				totalgamesplayed += a[i].numofgames;
+			}
+			DecimalFormat df = new DecimalFormat("##.#");
+			df.setRoundingMode(RoundingMode.HALF_EVEN);
+			String averagepts1 = df.format(totalpts/totalgamesplayed);
+		
+	String averagefgm1 = df.format(totalFGM/totalgamesplayed);
+			String averagefga1 = df.format(totalFGA/totalgamesplayed);
+			String averagefgp1 = df.format(StatKeeper.getLeagueFGP(a)*100);
+			String averagerebs1 = df.format(totalrebs/totalgamesplayed);
+			String averageasts1 = df.format(totalast/totalgamesplayed);
+			String averagestls1 = df.format(totalstl/totalgamesplayed);
+			String averageblks1 = df.format(totalblk/totalgamesplayed);
+			String averagetos1 = df.format(totaltos/totalgamesplayed);
+			String averagegmscore1 = df.format(totalgms/totalgamesplayed);
+			
+			String g = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%5s%5s", "LeagueAvg", averagepts1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, averagefgm1, averagefga1);
+		return g;
+		}
+		public String getAverage(){
+			 double pts = 0;
+			 double fgm = 0;
+			 double fga= 0;
+			 double rebs= 0;
+			 double asts= 0;
+			 double stls =0 ;
+			 double blks = 0;
+			 double tos =0 ;
+			 double threefgm = 0;
+			 double threefga= 0;
+			 double ftm= 0;
+			 double fta= 0;
+			 
+			 double asttoratio =0;
+			 double countpts= 0;
+			 double countfgm= 0;
+			 double countfga= 0;
+			 double countrebs= 0;
+			 double countasts= 0;
+			 double countstls= 0;
+			 double countblks= 0;
+			 double counttos= 0;
+			 double countasttoratio= 0;
+			 double countthreefgm = 0;
+			 double countthreefga= 0;
+			 double countftm= 0;
+			 double countfta= 0;
+			 double pts1 = 0;
+			 double fgm1 = 0;
+			 double fga1= 0;
+			 double rebs1= 0;
+			 double asts1= 0;
+			 double stls1 =0 ;
+			 double blks1 = 0;
+			 double tos1 =0 ;
+			 double asttoratio1 =0;
+			 double threefgm1 = 0;
+			 double threefga1 = 0;
+			 double ftm1 = 0;
+			 double fta1 = 0;
+			 String[] avgstring = new String[averages.length];
+			 double[] stats2 = new double[averages.length];
+			 String at = "HIII";
+			 
+			 for (int i =0; i < stats2.length; i++){
+					stats2[i] = -999;
+				}
+			
+			for (int i =0; i< games.length; i++){
+				if (games[i] != null){
+			if (games[i].getPts() != -1){
+					countpts++;
+				pts1 = games[i].getPts()*games[i].getGameFactor();}
+	
+			if (games[i].getFGM() != -1){
+				countfgm++;
+				fgm1= games[i].getFGM()*games[i].getGameFactor();}
+			if (games[i].getAst() != -1){
+					countasts++;
+					asts1 = games[i].getAst()*games[i].getGameFactor();}
+			if (games[i].getRebs() != -1){
+					countrebs++;
+				rebs1 = games[i].getRebs()*games[i].getGameFactor();
+				}
+			if (games[i].getFGA() != -1){
+				countfga++;
+					fga1 = games[i].getFGA()*games[i].getGameFactor();
+				}
+			if (games[i].getStls() != -1){
+					countstls++;
+					stls1 = games[i].getStls()*games[i].getGameFactor();}
+				if (games[i].getBlks() != -1){
+				countblks++;
+					blks1 = games[i].getBlks()*games[i].getGameFactor();}
+				if (games[i].getTos() != -1){
+				counttos++;
+					tos1 = games[i].getTos()*games[i].getGameFactor();}
+				if (games[i].getAsttoTORatio() != -1){
+				countasttoratio++;
+				}
+				if (games[i].getThreeFGM() != -1){
+					countthreefgm++;
+					threefgm1 = games[i].getThreeFGM()*games[i].getGameFactor();
+					}
+				if (games[i].getThreeFGA() != -1){
+					countthreefga++;
+					threefga1 = games[i].getThreeFGA()*games[i].getGameFactor();
+					}
+				if (games[i].getFTM() != -1){
+					countftm++;
+					ftm1 = games[i].getFTM()*games[i].getGameFactor();
+					}
+				if (games[i].getFTA() != -1){
+					countfta++;
+				
+	fta1 = games[i].getFTA()*games[i].getGameFactor();
+					}
+				
+				
+				
+				
+				pts +=pts1;
+				fgm += fgm1;
+				asts += asts1;
+				rebs += rebs1;
+				
+				fga += fga1;
+				stls += stls1;
+				blks += blks1;
+				tos += tos1;
+				asttoratio += asttoratio1;
+				threefgm += threefgm1;
+				threefga += threefga1;
+				ftm += ftm1;
+				fta += fta1;
+				pts1 = 0;
+				fgm1 = 0;
+				fga1= 0;
+			    rebs1= 0;
+				  asts1= 0;
+				stls1 =0 ;
+				 blks1 = 0;
+				 tos1 =0 ;
+				 asttoratio1 =0;
+				 threefgm1 = 0;
+				 threefga1 = 0;
+				 ftm1 = 0;
+				 fta1 = 0;
+				}}
+		
+			
+			if (countpts != 0)
+		
+	averagepts = pts/countpts;
+			
+			if (countfgm != 0)
+			averagefgm = fgm/countfgm;
+			if (countfga != 0)
+			averagefga = fga/countfga;
+			if(countfga == countfgm){
+			averagefgp = averagefgm/averagefga;
+			}
+			
+			if (countrebs != 0)
+			averagerebs = rebs/countrebs;
+			if (countasts!= 0)
+			averageasts = asts/countasts;
+			if (countstls != 0)
+		
+	averagestls = stls/countstls;
+			if (countblks != 0)
+			averageblks = blks/countblks;
+			if (counttos != 0)
+			averagetos = tos/counttos;
+			if (countthreefgm != 0)
+				averagethreefgm = threefgm/countthreefgm;
+
+			if (countthreefga != 0)
+				averagethreefga = threefga/countthreefga;
+			if (countftm != 0)
+				averageftm = ftm/countftm;
+			if (countfta != 0)
+				averagefta = fta/countfta;
+			if(countfta == countftm){
+			
+	averageftp = averageftm/averagefta;
+				}
+			if(countthreefga == countthreefgm){
+				averagethreefgp = averagethreefgm/averagethreefga;
+				}
+			if (averagetos != 0){
+				averageasttoratio = averageasts/averagetos;}
+			else{
+					averageasttoratio = 56789;
+				}
+			if (averagetos == -1){
+				averageasttoratio = -1;
+			}
+			
+			
+			averagefgp *= 100;
+			if (averagefgm == -1 || averagefga == -1){
+				averagefgp = -1;
+			}
+			averagethreefgp *= 100;
+			if (averagethreefgm == -1 || averagethreefga == -1){
+				averagethreefgp = -1;
+			}
+			averageftp *= 100;
+			if (averageftm == -1 || averagefta == -1){
+				averageftp = -1;
+			}
+			if (averageftm == 0 && averagefta == 0){
+				averageftp = 0;
+			}
+			averagegmscore = averagepts+ .4*averagefgm-.7*averagefga + .5*averagerebs + averagestls + 0.7 * averageasts + 0.7*averageblks  - averagetos; 
+			if (averagefta != -1 && averageftm != -1 && averagetos == -1 && averagefga == -1){
+			averagegmscore = averagepts+ .4*averagefgm + .5*averagerebs + averagestls + 0.7 * averageasts + 0.7*averageblks + 0.4 *averageftm - 0.4*averagefta ; 
+		}
+		double[] averages1 = {averagepts, averagefgp, averagerebs, averageasts,averagestls,averageblks, averagetos,averagegmscore, averageasttoratio,averagefgm, averagefga,averagethreefgm
+				,averagethreefga, averagethreefgp,
+		
+	
+	averageftm,
+				averagefta, averageftp};
+	
+			for (int i =0; i < averages1.length; i++){
+				if (averages1[i] != -1){
+					if (stats2[i] == -999){
+					stats2[i] = averages1[i];
+							}
+				}
+			
+				}
+			DecimalFormat df = new DecimalFormat("##.#");
+			DecimalFormat da = new DecimalFormat("#.##");
+		
+	df.setRoundingMode(RoundingMode.HALF_EVEN);
+			for (int i = 0; i< avgstring.length;i++){
+				avgstring[i] = new String("HIII");
+			}
+			for (int i =0 ; i< avgstring.length; i++){
+				if (stats2[i] != 56789 && stats2[i] != -999){
+				
+					if(stats2[i] >= 10 || stats2[i] <0)
+					avgstring[i] = df.format(stats2[i]);
+				   if(stats2[i] < 10 && stats2[i] >= 0)
+					avgstring[i] = da.format(stats2[i]);}
+				if (stats2[i] == 56789)
+		
+			avgstring[i] = "Inf";
+				if (i < stats2.length -1 && stats2[i] != -999)
+						avgstring[i] = String.format("%-5s",avgstring[i] );
+					if (i == stats2.length -1 && stats2[i] != -999)
+						avgstring[i] = String.format("%-5s",avgstring[i] );	
+			}
+			String name1 = String.format("%-17s", realname);
+			for (int i = 0; i < avgstring.length; i++){
+				if (avgstring[i].equals(at)){
+				
+				}else{
+					name1 += avgstring[i];
+					}
+			}
+			 if (getNumberofDoubleDoubles() ==0 )
+				    return name1;
+				    if(getNumberofDoubleDoubles() > 0&& getNumberofTripleDoubles() == 0)
+				    return name1 + String.format("%20s", getNumberofDoubleDoublesstr());
+				    if(getNumberofTripleDoubles() > 0)
+				    return name1 + String.format("%20s", getNumberofDoubleDoublesstr()) + String.format("%25s", getNumberofTripleDoublesstr());
+			if (1+1 ==2)
+				return name1;
+			String averagepts1 = df.format(averagepts);
+			String averagefgp1 = df.format((averagefgm/averagefga) * 100);
+			String averagefgm1 = df.format(averagefgm);
+			String averagefga1 = df.format(averagefga);
+			String averagerebs1 = df.format(averagerebs);
+			String averageasts1 = df.format(averageasts);
+			String averagestls1 = df.format(averagestls);
+			String averageblks1 = df.format(averageblks);
+
+			String averagetos1 = df.format(averagetos);
+			String averagegmscore1 = df.format(averagegmscore);
+		    
+			String g = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%5s%5s", realname, averagepts1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, averagefgm1, averagefga1);
+			String h = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%5s%5s%20s", realname, averagepts1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, averagefgm1, averagefga1, getNumberofDoubleDoublesstr());
+			String t = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%5s%5s%20s%25s", realname, averagepts1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, averagefgm1, averagefga1, getNumberofDoubleDoublesstr(), getNumberofTripleDoublesstr());
+			if (getNumberofDoubleDoubles() == 0)
+			return g;
+		
+	if(getNumberofDoubleDoubles()> 0 && getNumberofTripleDoubles() == 0)
+			return h;
+		
+
+	if(getNumberofTripleDoubles() > 0)
+			return t;
+			return null;
+		}
+		public double getAvgPts(){
+			return averagepts;
+		}
+		public double getAvgFGM(){
+			return averagefgm;
+		}
+	
+	public double getAvgFGA(){
+			return averagefga;
+		}
+		public double getAvgRebs(){
+			return averagerebs;
+		}
+		public double getAvgAsts(){
+	
+		return averageasts;
+		}
+		public double getAvgStls(){
+			return averagestls;
+	
+	}
+		public double getAvgBlks(){
+		
+	return averageblks;
+	
+	}
+		public double getAvgTos(){
+			return averagetos;
+		}
+		public double getAvgGameScore(){
+			return averagegmscore;
+		}
+		public String[] getGameNames(){
+			return gamenames;
+		}
+}
+
