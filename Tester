@@ -1,0 +1,263 @@
+package bbStatsPackage;
+
+public class StatKeeperTester {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		StatKeeper DavidK = new StatKeeper("David K.");
+
+		
+		DavidK.addGame(24,12, 32, 19, 4, 0, 1, 1, "vs. Seiichi");
+		DavidK.addGame(16,8,22,9,0,3,0,2, "vs. Chet");
+		DavidK.addGame(32,16,36,22,3,6,0,1, "vs. Joseph");
+		DavidK.addGame(22,11,30,17,2,0,0,2,"vs. Aaron");
+		DavidK.addGame(18,9,26,10,2,7,1,3, "vs. Chet 2");
+		DavidK.addGame(24, 12,35,13,3,1,0,1, "vs. Joseph 2");
+		DavidK.addGame(22,11,28,17,0, 2,4, 1, "vs. Seiichi 2");
+		
+		DavidK.getAverage();
+
+		StatKeeper William = new StatKeeper("William");
+	
+	William.addGame(8, 4, 10, 4, 1, 1, 0, 2,"vs. Seiichi");
+		William.addGame(6,3,8,8,1,2,0,2, "vs. Chet");
+		William.addGame(10,5,25,6,2,1,0,3, "vs. Joseph");
+		William.addGame(8,4,12,5,0,1,0,2, "vs. Seiichi 2");
+		William.getAverage();
+
+		StatKeeper Steve = new StatKeeper("Steve");
+		Steve.addGame(4,2,6,4,0,0,0,1, "vs. Seiichi");
+		Steve.addGame(0,0,4,2,1,0,1,1, "vs. Chet");
+		Steve.addGame(2,1,3,2,1,0,0,0,"vs. Aaron");
+		Steve.addGame(2,1,6,4,1,1,0,3, "vs. Chet 2");
+		Steve.addGame(6,3,10,12,1,2,0,5, "vs. Joseph 2");
+	
+	Steve.getAverage();
+
+		StatKeeper DavidH = new StatKeeper("David H.");
+		DavidH.addGame(10,5,17,5,2,0,2,0, "vs. Joseph");
+		DavidH.addGame(8,4,9,3,3,0,0,3, "vs. Aaron");
+		DavidH.addGame(8,4,13,7,4,1,0,1, "vs. Chet 2");
+		DavidH.addGame(4,2,8,7,0,3,1,0, "vs. Joseph 2");
+		DavidH.addGame(2,1,7,4,1,0,0,0, "vs. Seiichi 2");
+		
+		DavidH.getAverage();
+
+		StatKeeper Seiichi = new StatKeeper("Seiichi");
+		Seiichi.addGame(19,9, 17, 9, 1, 1, 1, 1, "vs. Chet");
+	
+	Seiichi.addGame(36,18,36,12,2,4,0,0, "vs. David");
+		Seiichi.addGame(32,16,39,18,0,2,0,1, "vs. Aaron");
+		Seiichi.addGame(28,14,46,23,3,2,0,2,"vs. Joseph");
+		Seiichi.addGame(18,9,16,10,0,0,0,1, "vs. Aaron 2");
+		Seiichi.addGame(24,12,26, 12, 1,1,0,2, "vs. David 2");
+		Seiichi.addGame(18,9,30,12,2,3,0,0, "vs. Joseph 2");
+	
+	Seiichi.getAverage();
+
+		StatKeeper Peter = new StatKeeper("Peter");
+		Peter.addGame(2, 1, 4, 2, 0, 1, 0, 2, "vs. Chet");
+		Peter.addGame(4,2,9,5,2,0,0,1, "vs. David");
+		Peter.addGame(0,0,5,7,1,0,0,1, "vs. Aaron");
+		Peter.addGame(8,4,20,9,1,4,0,2, "vs. Joseph");
+		Peter.addGame(2,1,8,4,2,1,0,2, "vs. Aaron 2");
+		Peter.addGame(8,4,16, 3,1,0,0,2, "vs. David 2");
+		Peter.addGame(4, 2, 11, 3, 2, 3, 1, 4, "vs. Joseph 2");
+		Peter.getAverage();
+
+		StatKeeper Solomon = new StatKeeper("Solomon");
+		Solomon.addGame(0,0,1,5,0,2,0,1, "vs. Chet");
+		Solomon.addGame(0,0,0,4,0,0,0,2,"vs. David");
+		Solomon.addGame(0,0,0,3,0,3,0,3, "vs. Aaron");
+		Solomon.addGame(4,2,6,14,0,0,0,1, "vs. Joseph");
+		Solomon.addGame(2,1,5,6,3,0,0,1, "vs. Aaron 2");
+		Solomon.addGame(2,1,3,9,1,0,0,1, "vs. David 2");
+		Solomon.addGame(6,3,4,8,1,5,0,1, "vs. Joseph 2");
+		Solomon.getAverage();
+
+		StatKeeper Joseph = new StatKeeper("Joseph");
+		Joseph.addGame(12,6,19,8,0,3,0,1, "vs. Aaron");
+		Joseph.addGame(22,11,22,15,0,0,3,1, "vs. David");
+		Joseph.addGame(10,5,22,22,0,1,1,2, "vs. Chet");
+		Joseph.addGame(16,8,16,16,1,0,0,1, "vs. Seiichi");
+		Joseph.addGame(10,5,14,12,3,1,0,3, "vs. David 2");
+		Joseph.addGame(12,6,18,10,2,0,0,3, "vs. Aaron 2");
+		Joseph.addGame(12,6,19,18,3,3,2,4, "vs. Seiichi 2");
+		Joseph.addGame(12,6,12,12,0,0,0,0, "vs. Chet 2");
+		Joseph.getAverage();
+
+	
+	StatKeeper Logan = new StatKeeper("Logan");
+		Logan.addGame(0,0,8,4,3,1,0,0,"vs. Aaron");
+		Logan.addGame(10,5,11,13,2,0,1,2, "vs. David");
+		Logan.addGame(6,3,22,10,2,0,0,2, "vs. Chet");
+		Logan.addGame(8,4,20,9,5,2,0,6, "vs. Seiichi");
+		Logan.addGame(12,6,16,6,1,2,1,3, "vs. David 2");
+		Logan.addGame(8,4,12,12,3,0,1,1,"vs. Aaron 2");
+		Logan.addGame(8, 4, 12, 2, 2, 0, 0, 0, "vs. Chet 2");
+		Logan.getAverage();
+
+		StatKeeper Riley = new StatKeeper("Riley");
+		Riley.addGame(4,2,9,2,0,1,1,0, "vs. Aaron");
+		Riley.addGame(6,3,10,1,3,1,2,5, "vs. David");
+		Riley.addGame(8,4,15,5,0,0,1,2, "vs. Chet");
+	    Riley.addGame(4,2,12,8,1,0,2,3, "vs. Seiichi");
+	    Riley.addGame(8, 4, 9, 5, 3, 1, 2, 3, "vs. David 2");
+		Riley.addGame(10,5,8,3,2,0,1,4, "vs. Seiichi 2");
+		Riley.addGame(0,0,6,2,0,0,0,4,12.0/7.0, "vs. Chet 2");
+		Riley.getAverage();
+		StatKeeper NullGuyMaman = new StatKeeper("NullGuy");
+	
+	NullGuyMaman.addGame(4,2,11,4,0,1,0,1, "vs. Aaron 2");
+		NullGuyMaman.addGame(0,0,0,2,0,1,0,3, 23.0/7.0,  "vs. Seiichi 2");
+		NullGuyMaman.getAverage();
+		StatKeeper Andrew = new StatKeeper("Andrew");
+		Andrew.addGame(6, 3, 14, 6, 3, 1, 0, 2, 23.0/16.0, "vs. Seiichi 2");
+		Andrew.addGame(0,0,4,4,2,0,0,0, 12.0/5.0, "vs. Chet 2");
+		Andrew.getAverage();
+		StatKeeper Chet = new StatKeeper("Chet");
+		Chet.addGame(14,7,19,7,1,1,2,2, "vs. Seiichi");
+		Chet.addGame(16,8,13,13,11,1,0,5, "vs. David");
+		Chet.addGame(22,11,23,8,2,0,2,3, "vs. Aaron");
+		Chet.addGame(38,19,38,22,4,2,5,2, "vs. Joseph");
+		Chet.addGame(22,11,18,15,1,1,3,6, "vs. David 2");
+		Chet.addGame(22,11,29,11,1,0,5,0, "vs. Aaron 2");
+		Chet.addGame(32,16,30,16,2,0,0,0, "vs. Joseph 2");
+		Chet.getAverage();
+		StatKeeper Tim = new StatKeeper("Tim");
+	
+	Tim.addGame(4,2,4,6,0,1,0,0, "vs. Seiichi");
+		Tim.addGame(20,10,20,4,3,2,0,2,"vs. David" );
+		Tim.addGame(6,3,5,6,0,0,0,2, "vs. Aaron");
+		Tim.addGame(12,6,14,9,4,0,2,1, "vs. Joseph");
+		Tim.addGame(10,5,9,2,2,3,0,3, "vs. David 2");
+		Tim.addGame(4,2,4,11,2,1,0,3,"vs. Aaron 2");
+		Tim.addGame(4,2,6,6,2,0,0,2,"vs. Joseph 2");
+		Tim.getAverage();
+
+		StatKeeper Jerry = new StatKeeper("Jerry");
+		Jerry.addGame(0,0,5,1,1,1,0,1, "vs. Seiichi");
+		Jerry.addGame(2,1,1,0,1,0,0,0,"vs. Aaron");
+		Jerry.addGame(4,2,12,0,0,0,0,1, "vs. Joseph");
+		Jerry.addGame(0,0,3,1,0,0,0,2, "vs. David 2");
+		Jerry.addGame(2,1,5,2,0,1,0,3, "vs. Aaron 2");
+		Jerry.addGame(8,4,10,2,0,0,0,0, "vs. Joseph 2");
+		Jerry.getAverage();
+
+		StatKeeper Patrick = new StatKeeper("Patrick");
+		Patrick.addGame(12, 6, 13, 1, 3, 2, 0, 1, "vs. David");
+		Patrick.getAverage();
+
+		StatKeeper Aaron = new StatKeeper("Aaron");
+		Aaron.addGame(30,15,33,6,2,1,0,4, "vs. Joseph");
+		Aaron.addGame(16,8,26,8,2,0,0,2, "vs. Chet");
+		Aaron.addGame(4,2,24,8,1,1,0,2, "vs. Seiichi");
+        Aaron.addGame(18,9,30,3,1,0,0,2, "vs. David");
+		Aaron.addGame(10,5,17,4,2,1,0,2, "vs. Seiichi 2");
+		Aaron.addGame(14,6,19,7,0,0,0,0, "vs. Chet 2");
+		Aaron.addGame(18,9,28,8,1,0,2,1, "vs. Joseph 2");
+		Aaron.getAverage();
+
+
+		StatKeeper Steven = new StatKeeper("Steven");
+		Steven.addGame(4,2,6,5,0,1,0,0, "vs. Joseph");
+		Steven.addGame(8,4,12,12,1,0,0,0, "vs. Chet");
+		Steven.addGame(8,4,7,8,2,2,1,2, "vs. Seiichi");
+		Steven.addGame(12,6,11,16,1,2,0,2, "vs. David");
+		Steven.addGame(6,3,8,10,3,1,0,2, "vs. Seiichi 2");
+		Steven.addGame(2,1,4,1,2,1,0,0,23.0/6.0, "vs. Joseph 2");
+		Steven.getAverage();
+		StatKeeper Kenneth = new StatKeeper("Kenneth");
+		Kenneth.addGame(4,2,7,5,2,0,2,3, "vs. Joseph");
+		Kenneth.addGame(4,2,4,2,3,1,1,0, "vs. Chet");
+		Kenneth.addGame(6,3,7,6,3,0,3,2, "vs. Seiichi");
+		Kenneth.addGame(4,2,7,8,5,0,2,0, "vs. David");
+		Kenneth.addGame(2,1,4,3,2,1,0,1, "vs. Seiichi 2");
+		Kenneth.addGame(2,1,4,5,3,0,0,0, "vs. Chet 2");
+		Kenneth.addGame(6,3,5,12,1,3,2,0, "vs. Joseph 2");
+		Kenneth.getAverage();
+		StatKeeper Shin = new StatKeeper("Shin");
+		Shin.addGame(4, 2,16,11,3,0,0,4, "vs. Chet 2");
+		Shin.addGame(2,1,10,4,2,0,0,1, 23.0/17.0, "vs. Joseph 2");
+		Shin.getAverage();
+		StatKeeper[] lg = {Aaron,Kenneth, Steven, Shin, Patrick, DavidK, DavidH, Steve, William, Chet, Tim, Jerry, Seiichi, Peter, Solomon, Joseph, Riley, Logan, Andrew};
+		StatKeeper[] lga = {Aaron,Kenneth, Steven, Shin, Patrick, DavidK, DavidH, Steve, William, Chet, Tim, Jerry, Seiichi, Peter, Solomon, Joseph, Riley, Logan, NullGuyMaman, Andrew};
+		StatKeeper[] Kawillianam = {DavidK, DavidH, William, Steve};
+		StatKeeper[] BallersUnchained ={Seiichi, Peter, Solomon};
+		StatKeeper[] MenAmongstBoys ={Chet, Patrick, Jerry, Tim};
+		StatKeeper[] Maman = {Joseph, Riley, Logan, NullGuyMaman, Andrew};
+	
+	StatKeeper[] MagicHands = {Aaron, Kenneth, Steven, Shin};
+		Team Kawillianam1 = new Team(Kawillianam, "Kawillianam");
+		Team BallersUnchained1 = new Team(BallersUnchained, "BallersUnchained");
+		Team MenAmongstBoys1 = new Team(MenAmongstBoys, "MenAmongstBoys");
+		Team Maman1 = new Team(Maman, "Maman");
+		Team MagicHands1 = new Team(MagicHands, "MagicHands");
+		Team[] lg1= {Kawillianam1, BallersUnchained1, MenAmongstBoys1,Maman1,MagicHands1};  
+		StatKeeper[] sortedgamescores = StatKeeper.sortGameScores(lg);
+		System.out.println(DavidK.getAverageHeader());
+		for (int t = sortedgamescores.length-1 ; t > -1; t--){
+			System.out.println(sortedgamescores[t].getAverage());
+		}
+		System.out.println(StatKeeper.getLeagueAverages(lga));
+	
+	System.out.println(Kawillianam1.getTeamAverageStats());
+		System.out.println(BallersUnchained1.getTeamAverageStats());
+		System.out.println(MenAmongstBoys1.getTeamAverageStats());
+		System.out.println(Maman1.getTeamAverageStats());
+		System.out.println(MagicHands1.getTeamAverageStats());
+
+
+
+
+
+
+		System.out.println(StatKeeper.getHighestGameScore(lg));
+	
+	System.out.println(StatKeeper.getLowestGameScore(lg));
+		System.out.println(StatKeeper.getHighestPoints(lg));
+		System.out.println(StatKeeper.getHighestFGA(lg));
+		System.out.println(StatKeeper.getHighestFGM(lg));
+		System.out.println(StatKeeper.getHighestRebs(lg));
+		System.out.println(StatKeeper.getHighestAsts(lg));
+		System.out.println(StatKeeper.getHighestStls(lg));
+		System.out.println(StatKeeper.getHighestBlks(lg));
+		System.out.println(StatKeeper.getHighestTOs(lg));
+		System.out.println("The League FGP is: " + StatKeeper.getLeagueFGP(lg)*100);
+		System.out.println(Team.getHighestGameScore(lg1));
+		System.out.println(Team.getLowestGameScore(lg1));
+		System.out.println(Team.getHighestPts(lg1));
+		System.out.println(Team.getLowestPts(lg1));
+		System.out.println(Team.getHighestFGA(lg1));
+		System.out.println(Team.getLowestFGA(lg1));
+		System.out.println(Team.getHighestRebs(lg1));
+		System.out.println(Team.getLowestRebs(lg1));
+		System.out.println(Team.getHighestAst(lg1));
+		System.out.println(Team.getLowestAst(lg1));
+		System.out.println(Team.getHighestStls(lg1));
+		System.out.println(Team.getLowestStls(lg1));
+	
+	System.out.println(Team.getHighestBlks(lg1));
+		System.out.println(Team.getHighestTos(lg1));
+		System.out.println(Team.getLowestTos(lg1));
+		System.out.println(Team.getHighestFGP(lg1));
+		System.out.println(Team.getLowestFGP(lg1));
+		System.out.println(DavidK.getGameLog());
+		System.out.println(Chet.getGameLog());
+		System.out.println(Steven.getGameLog());
+		System.out.println(Jerry.getGameLog());
+		System.out.println(Aaron.getGameLog());
+		System.out.println(Kenneth.getGameLog());
+		System.out.println(Peter.getGameLog());
+		System.out.println(Solomon.getGameLog());
+		System.out.println(Seiichi.getGameLog());
+		System.out.println(Riley.getGameLog());
+		System.out.println(Andrew.getGameLog());
+		System.out.println(Joseph.getGameLog());
+		System.out.println(NullGuyMaman.getGameLog());
+		System.out.println(Shin.getGameLog());
+			}
+	}
