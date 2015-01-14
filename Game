@@ -1,0 +1,935 @@
+package bbStatsPackage;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+public class Game {
+	private double pts;
+	private double fgm;
+	private double fga;
+	private double threefgm;
+	private double threefga;
+	private double ftp;
+	private double threefgp;
+	private double ftm;
+private double gamefactor = 1;
+
+
+	private double fta;
+	private double rebs;
+	private double asts;
+	private double stls;
+	private double blks;
+	private double tos;
+	private double asttoratio;
+	private double gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+	private String name;
+	private String NoStatsExplanation;
+	private double[] stats = new double[6];
+	private double[] stats1 = new double[17];
+	private String[] statsString = { "Pts", "FGM", "FGA", "FGP", "Rebs", "Asts", "Stls", "Blks", "TOs", "FTM", "FTA", "FTP", "3PM", "3PA", "3P%", "A/TO", "GmSc"};
+
+	public Game(){
+		
+		this.pts = -1;
+			stats[0] = pts;
+			stats1[0]= pts;
+			this.fgm = -1;
+		
+	stats1[1]= fgm;
+			this.fga = -1;
+			stats1[2]= fga;
+		
+		this.rebs = -1;
+			stats[1] = rebs;
+		
+	stats1[3]= rebs;
+			this.asts = -1;
+			stats[2] = asts;
+			stats1[4]= asts;
+			this.stls = -1;
+			stats[3] = stls;
+			stats1[5]= stls;
+		
+
+	this.blks = -1;
+
+			stats[4] = blks;
+			stats1[6]= blks;
+			this.tos = -1;
+			stats[5] = tos;
+			stats1[7]= tos;
+			this.ftm = -1;
+			stats1[8]= ftm;
+			this.fta = -1;
+			stats1[9]= fta;
+			this.threefgm = -1;
+			stats1[10]= threefgm;
+			this.threefga = -1;
+			stats1[11]= threefga;
+			this.name = "";
+			if (asts != -1 && tos != -1)
+			asttoratio = asts/tos;
+			
+			
+			
+			
+			
+			stats1[0]= pts;
+			stats1[1]= fgm;
+			stats1[2]= fga;
+			stats1[3] = fgm * 100.0/fga;
+			if (fgm == -1 || fga == -1){
+			
+	stats1[3]= -1;
+			}
+			if (asts == 0 && tos == 0)
+			
+		asttoratio = 0;
+			if(asts > 0 && tos == 0)
+				asttoratio = 56789;
+			if (asts == 0 && tos > 0)
+				asttoratio = 0;
+			if (asts == -1 || tos == -1)
+				asttoratio =-1;	
+			stats1[4]= rebs;
+			stats1[5]= asts;
+			stats1[6]= stls;
+			stats1[7]= blks;
+			stats1[8]= tos;
+			gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+			stats1[9]= ftm;
+			stats1[10]= fta;
+		this.ftp = -1;
+		this.threefgp = -1;
+			
+			stats1[11] = ftp;
+			stats1[12]= threefgm;
+			stats1[13]= threefga;
+			stats1[14] = threefgp;
+			stats1[15] = asttoratio;
+			stats1[16] = gamescore;
+	
+	}
+	public Game(String DNP, String name){
+		NoStatsExplanation = DNP;
+		this.pts = -1;
+		stats[0] = pts;
+		stats1[0]= pts;
+		this.fgm = -1;
+		stats1[1]= fgm;
+		this.fga = -1;
+		stats1[2]= fga;
+	
+	this.rebs = -1;
+		stats[1] = rebs;
+	
+stats1[3]= rebs;
+		this.asts = -1;
+		stats[2] = asts;
+		stats1[4]= asts;
+		this.stls = -1;
+		stats[3] = stls;
+		stats1[5]= stls;
+	
+this.blks = -1;
+
+		stats[4] = blks;
+		stats1[6]= blks;
+		this.tos = -1;
+		stats[5] = tos;
+		stats1[7]= tos;
+		this.ftm = -1;
+		stats1[8]= ftm;
+		this.fta = -1;
+		stats1[9]= fta;
+		this.threefgm = -1;
+		stats1[10]= threefgm;
+		this.threefga = -1;
+		stats1[11]= threefga;
+		this.name = "";
+		if (asts != -1 && tos != -1)
+		asttoratio = asts/tos;
+		
+		
+		
+		
+		
+		stats1[0]= pts;
+		stats1[1]= fgm;
+		stats1[2]= fga;
+		stats1[3] = fgm * 100.0/fga;
+		if (fgm == -1 || fga == -1){
+		
+stats1[3]= -1;
+		}
+		if (asts == 0 && tos == 0)
+		
+	asttoratio = 0;
+		if(asts > 0 && tos == 0)
+			asttoratio = 56789;
+		if (asts == 0 && tos > 0)
+			asttoratio = 0;
+		if (asts == -1 || tos == -1)
+			asttoratio =-1;	
+		stats1[4]= rebs;
+		stats1[5]= asts;
+		stats1[6]= stls;
+		stats1[7]= blks;
+		stats1[8]= tos;
+		gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+		stats1[9]= ftm;
+		stats1[10]= fta;
+	this.ftp = -1;
+	this.threefgp = -1;
+		
+		stats1[11] = ftp;
+		stats1[12]= threefgm;
+		stats1[13]= threefga;
+		stats1[14] = threefgp;
+		stats1[15] = asttoratio;
+		stats1[16] = gamescore;
+	}
+		public Game(double pts, double fgm, double fga, double rebs, double asts, double stls, double blks, double tos, double threefgm, double threefga, double ftm, double fta, String name){
+			this.pts = pts;
+			stats[0] = pts;
+			this.fgm = fgm;
+			this.fga = fga;
+			this.rebs = rebs;
+			stats[1] = rebs;
+			this.asts = asts;
+			stats[2] = asts;
+			this.stls = stls;
+			stats[3] = stls;
+			this.blks = blks;
+			stats[4] = blks;
+			this.tos = tos;
+			stats[5] = tos;
+			this.name = name;
+			if (asts != -1 && tos != -1)
+				asttoratio = asts/tos;
+			if (asts == 0 && tos == 0)
+				asttoratio = 0;
+			if(asts > 0 && tos == 0)
+				asttoratio = 56789;
+			if (asts == 0 && tos > 0)
+				asttoratio = 0;
+			if (asts == -1 || tos == -1)
+			
+		asttoratio =-1;	
+			this.ftm = ftm;
+			this.fta = fta;
+			this.threefgm = threefgm;
+			this.threefga = threefga;
+			stats1[0]= pts;
+			stats1[1]= fgm;
+			stats1[2]= fga;
+			stats1[3] = fgm * 100.0/fga;
+			if (fgm == -1 || fga == -1){
+				stats1[3]= -1;
+			}
+			
+			
+			stats1[4]= rebs;
+			stats1[5]= asts;
+	
+
+	
+	stats1[6]= stls;
+			stats1[7]= blks;
+			stats1[8]= tos;
+			gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+			stats1[9]= ftm;
+			stats1[10]= fta;
+		
+	ftp = ftm *100.0 / fta;
+			if (fta == 0){
+				ftp = 0;
+			}
+			if (ftm == -1 || fta == -1){
+				ftp= -1;
+			}
+			
+			stats1[11] = ftp;
+			stats1[12]= threefgm;
+			stats1[13]= threefga;
+			threefgp = threefgm *100.0 / threefga;
+			if (threefga == 0){
+				threefgp = 0;
+			}
+			if (threefgm == -1 || threefga == -1){
+				threefgp= -1;
+			}
+			stats1[14] = threefgp;
+			stats1[15] = asttoratio;
+			stats1[16] = gamescore;
+		}
+	
+	public Game(double pts, double fgm, double rebs, double asts, double stls, double blks, double threefgm, double ftm, double fta, String name, String a){
+			this.pts = pts;
+			stats[0] = pts;
+			this.fgm = fgm;
+			this.fga = -1;
+			this.rebs = rebs;
+			stats[1] = rebs;
+			this.asts = asts;
+			stats[2] = asts;
+			this.stls = stls;
+			stats[3] = stls;
+			this.blks = blks;
+			stats[4] = blks;
+			this.tos = -1;
+			stats[5] = tos;
+			this.name = name;
+			if (asts != -1 && tos != -1)
+				asttoratio = asts/tos;
+			if (asts == 0 && tos == 0)
+				asttoratio = 0;
+			if(asts > 0 && tos == 0)
+				asttoratio = 56789;
+			if (asts == 0 && tos > 0)
+				asttoratio = 0;
+			if (asts == -1 || tos == -1)
+			
+		asttoratio =-1;	
+		
+	this.ftm = ftm;
+			this.fta = fta;
+			this.threefgm = threefgm;
+			this.threefga = -1;
+			stats1[0]= pts;
+			stats1[1]= fgm;
+			stats1[2]= fga;
+			stats1[3] = fgm * 100.0/fga;
+			if (fgm == -1 || fga == -1){
+				stats1[3]= -1;
+			}
+			
+			
+			stats1[4]= rebs;
+			stats1[5]= asts;
+	
+	
+	stats1[6]= stls;
+			stats1[7]= blks;
+			stats1[8]= tos;
+			gamescore= pts+ .4*fgm + .5*rebs + stls + 0.7 * asts + 0.7*blks -.4*fta +.4*ftm;
+			stats1[9]= ftm;
+			stats1[10]= fta;
+			ftp = ftm *100.0 / fta;
+			if (fta == 0){
+				ftp = 0;
+			}
+			if (ftm == -1 || fta == -1){
+				ftp= -1;
+			}
+			
+			stats1[11] = ftp;
+			stats1[12]= threefgm;
+			stats1[13]= threefga;
+			threefgp = threefgm *100.0 / threefga;
+			if (threefga == 0){
+				threefgp = 0;
+			}
+			if (threefgm == -1 || threefga == -1){
+				threefgp= -1;
+			}
+			stats1[14] = threefgp;
+			stats1[15] = asttoratio;
+			stats1[16] = gamescore;
+		}
+
+		public Game(double pts, double fgm, double fga, double rebs, double asts, double stls, double blks, double tos, String name){
+	
+		this.pts = pts;
+			stats[0] = pts;
+			this.fgm = fgm;
+			this.fga = fga;
+			this.rebs = rebs;
+			stats[1] = rebs;
+			this.asts = asts;
+		
+	stats[2] = asts;
+			this.stls = stls;
+			stats[3] = stls;
+			this.blks = blks;
+			stats[4] = blks;
+			this.tos = tos;
+			stats[5] = tos;
+		
+	this.name = name;
+		
+	this.ftm = -1;
+			this.fta = -1;
+			this.threefgm = -1;
+			this.threefga = -1;
+			if (asts != -1 && tos != -1)
+			
+	asttoratio = asts/tos;
+			if (asts == 0 && tos == 0)
+				asttoratio = 0;
+			if(asts > 0 && tos == 0)
+				asttoratio = 56789;
+			if (asts == 0 && tos > 0)
+				asttoratio = 0;
+			if (asts == -1 || tos == -1)
+			
+	asttoratio =-1;	
+			stats1[0]= pts;
+			stats1[1]= fgm;
+			stats1[2]= fga;
+			stats1[3] = fgm * 100.0/fga;
+		
+	if (fgm == -1 || fga == -1){
+				stats1[3]= -1;
+			}
+			
+			
+			stats1[4]= rebs;
+			stats1[5]= asts;
+			stats1[6]= stls;
+			stats1[7]= blks;
+			stats1[8]= tos;
+			gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+			stats1[9]= ftm;
+			stats1[10]= fta;
+			ftp = ftm *100.0 / fta;
+			if (fta == 0){
+				ftp = 0;
+			}
+			if (ftm == -1 || fta == -1){
+				ftp= -1;
+			}
+			stats1[11] = ftp;
+			stats1[12]= threefgm;
+			stats1[13]= threefga;
+			threefgp = threefgm *100.0 / threefga;
+			if (threefga == 0){
+				threefgp = 0;
+			}
+			if (threefgm == -1 || threefga == -1){
+				threefgp= -1;
+			}
+			stats1[14] = threefgp;
+			stats1[15] = asttoratio;
+			stats1[16] = gamescore;
+		}
+		public Game(double pts, double fgm, double fga, double rebs, double asts, double stls, double blks, double tos, double gamefactor, String name){
+			
+			this.pts = pts;
+				stats[0] = pts;
+				this.fgm = fgm;
+				this.fga = fga;
+				this.rebs = rebs;
+				stats[1] = rebs;
+				this.asts = asts;
+			
+		stats[2] = asts;
+				this.stls = stls;
+				stats[3] = stls;
+				this.blks = blks;
+				stats[4] = blks;
+				this.tos = tos;
+				stats[5] = tos;
+			
+		this.name = name;
+				this.ftm = -1;
+				this.fta = -1;
+				this.threefgm = -1;
+				this.threefga = -1;
+				if (asts != -1 && tos != -1)
+			
+	
+		asttoratio = asts/tos;
+				if (asts == 0 && tos == 0)
+
+					asttoratio = 0;
+				if(asts > 0 && tos == 0)
+					asttoratio = 56789;
+				if (asts == 0 && tos > 0)
+					asttoratio = 0;
+				if (asts == -1 || tos == -1)
+					asttoratio =-1;	
+				stats1[0]= pts;
+				stats1[1]= fgm;
+				stats1[2]= fga;
+			
+	stats1[3] = fgm * 100.0/fga;
+				if (fgm == -1 || fga == -1){
+					stats1[3]= -1;
+				}
+				
+				
+				stats1[4]= rebs;
+				stats1[5]= asts;
+				stats1[6]= stls;
+				stats1[7]= blks;
+				stats1[8]= tos;
+				gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+				stats1[9]= ftm;
+				stats1[10]= fta;
+				ftp = ftm *100.0 / fta;
+				if (fta == 0){
+					ftp = 0;
+				}
+				if (ftm == -1 || fta == -1){
+					ftp= -1;
+				}
+				stats1[11] = ftp;
+				stats1[12]= threefgm;
+				stats1[13]= threefga;
+				threefgp = threefgm *100.0 / threefga;
+				
+				if (threefga == 0){
+					threefgp = 0;
+				}
+				if (threefgm == -1 || threefga == -1){
+				
+	threefgp= -1;
+				}
+				stats1[14] = threefgp;
+				stats1[15] = asttoratio;
+				stats1[16] = gamescore;
+			
+	this.gamefactor = gamefactor;
+			}
+		public Game(double pts, double fgm, double fga, double threefgm, double threefga, double ftm, double fta, String name){
+			this.pts = pts;
+			stats[0] = pts;
+			this.fgm = fgm;
+			this.fga = fga;
+			this.ftm = ftm;
+	
+	
+		this.fta = fta;
+			this.threefgm = threefgm;
+			this.threefga = threefga;
+			this.name = name;
+		
+	this.rebs = -1;
+
+			this.asts = -1;
+			
+			this.stls = -1;
+			
+			this.blks = -1;
+		
+	
+	this.tos = -1;
+			if (asts != -1 && tos != -1)
+				asttoratio = asts/tos;
+			if (asts == 0 && tos == 0)
+			
+	asttoratio = 0;
+		
+		if(asts > 0 && tos == 0)
+				asttoratio = 56789;
+			if (asts == 0 && tos > 0)
+				asttoratio = 0;
+			if (asts == -1 || tos == -1)
+				asttoratio =-1;		
+			stats1[0]= pts;
+			stats1[1]= fgm;
+			stats1[2]= fga;
+			if (fgm == -1 || fga == -1){
+				stats1[3]= -1;
+		
+	}else{
+			stats1[3] = fgm * 100.0/fga;}
+			
+			stats1[4]= rebs;
+		
+	
+	stats1[5]= asts;
+			stats1[6]= stls;
+			stats1[7]= blks;
+			stats1[8]= tos;
+			gamescore= pts+ .4*fgm-.7*fga + .5*rebs + stls + 0.7 * asts + 0.7*blks -tos;
+			stats1[9]= ftm;
+			stats1[10]= fta;
+			ftp = ftm *100.0 / fta;
+			if (fta == 0){
+				ftp = 0;
+			}
+			if (ftm == -1 || fta == -1){
+				ftp= -1;
+			}
+			stats1[11] = ftp;
+			stats1[12]= threefgm;
+			stats1[13]= threefga;
+			threefgp = threefgm *100.0 / threefga;
+			if (threefga == 0){
+				threefgp = 0;
+			}
+			if (threefgm == -1 || threefga == -1){
+				threefgp= -1;
+			}
+			stats1[14] = threefgp;
+			stats1[15] = asttoratio;
+			stats1[16] = gamescore;
+		}
+	
+	public String getGame(){
+		double[] stats2 = null; 
+		String[] statString2 = null;
+		
+		int count = 0;
+		for (int i =0; i < statsString.length; i++){
+			if (stats1[i] != -1){
+				count++;
+			}
+
+	
+	}
+		stats2 = new double[stats1.length];
+		statString2 = new String[stats1.length];
+		for (int i =0; i < stats2.length; i++){
+			stats2[i] = -999;
+		}
+		for (int i =0; i < stats1.length; i++){
+			
+				
+			
+			if (stats1[i] != -1){
+				if (stats2[i] == -999 )
+				stats2[i] = stats1[i];
+			}
+		
+			}
+		for (int i = 0; i< statString2.length;i++){
+			statString2[i] = "HIII";
+		}
+		DecimalFormat df = new DecimalFormat("##.#");
+	
+	df.setRoundingMode(RoundingMode.HALF_EVEN);
+		
+		for (int i = 0; i < stats2.length; i ++){
+			if (stats2[i]!= -999){
+				
+				statString2[i] = df.format(stats2[i]);
+				if (stats2[i] == 56789)
+					statString2[i] = "Inf";
+			if (i < stats2.length -1)
+			statString2[i] = String.format("%-5s",statString2[i] );
+			if (i == stats2.length -1)
+			statString2[i] = String.format("%5s",statString2[i] );	
+	
+	
+		}}
+		String name1 = String.format("%-25s", name);
+	
+	for (int i = 0; i < statString2.length; i++){
+		
+	if (!statString2[i].equals("HIII"))
+			name1 += statString2[i];
+		}
+		 if (!isDoubleDouble1())
+			    return name1;
+			    if(isDoubleDouble1()&& !(isTripleDouble()))
+			    return name1 + String.format("%20s", isDoubleDouble());
+			    if(isTripleDouble())
+			    return name1 + String.format("%20s", isDoubleDouble()) + String.format("%25s", isTripleDoubleString());
+		if ((1 + 1) == 2)
+		return name1;
+		
+		
+		String averagepts1 = df.format(pts);
+		String averagefgp1 = df.format((fgm/fga) * 100);
+		String averagefgm1 = df.format(fgm);
+		String averagefga1 = df.format(fga);
+		String averagerebs1 = df.format(rebs);
+		String averageasts1 = df.format(asts);
+		String averagestls1 = df.format(stls);
+		String averageblks1 = df.format(blks);
+		String averagetos1 = df.format(tos);
+		String averagegmscore1 = df.format(gamescore);
+	    String g = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s", name, averagepts1,averagefgm1, averagefga1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1);
+	    String h = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%20s", name, averagepts1,averagefgm1, averagefga1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, isDoubleDouble());
+	    String t = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%20s%25s", name, averagepts1,averagefgm1, averagefga1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, isDoubleDouble(), isTripleDoubleString());
+	    if (!isDoubleDouble1())
+	    return g;
+	    if(isDoubleDouble1()&& !(isTripleDouble()))
+	    return h;
+	    if(isTripleDouble())
+	    return t;
+	    return null;
+	}
+	public String getGameHeader(){
+		String header = String.format("%-25s", "Opponent's Name");
+		
+		for (int i = 0; i< stats1.length; i++){
+			if (stats1[i] != -1){
+				if (i < stats1.length -1)
+				header += String.format("%-5s", statsString[i]);
+				if (i == stats1.length -1)
+					header += String.format("%5s", statsString[i]);
+			}
+		}
+		String g = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s","Opponent's Name", "Pts", "FGM", "FGA", "FGP", "Rebs", "Asts", "Stls", "Blks", "TOs", "GSc");
+		return header;
+	}
+	public String isDoubleDouble(){
+		int count = 0;
+		int index1 = -1;
+		int index2 = -1;
+		String theString;
+		for(int i = 0; i < stats.length;i++){
+		
+	if(stats[i]* gamefactor >= 10){
+				count++;
+				if(index1 == -1){
+					index1 = i;
+				}else {
+					if (index2 == -1){
+						index2 = i;
+				
+	}
+				}
+				
+			}
+		}
+		if(count >= 2){
+			theString = " Double-Double:";
+			if (stats[index1] == getPts()){
+				theString+= " 10+ Pts";
+				index1 = index2;
+		
+	}
+			
+			if(stats[index1] == getRebs()){
+				if(theString.length() > 13){
+					theString += " and 10+ Rebs";
+					return theString;
+				}
+
+				theString += " 10+ Rebs";
+			    index1 = index2;
+			}
+			if(stats[index1] == getAst()){
+	
+		
+	if(theString.length()> 13){
+		
+			theString += " and 10+ Asts";
+					return theString;}
+				theString += " 10+ Asts";
+			
+	
+			     }
+			if(stats[index1] == getStls()){
+				if(theString.length()> 13){
+					theString += " and 10+ Stls";
+					return theString;}
+				theString += " 10+ Stls";
+			
+	
+			     }
+		}
+		return null;
+	}
+	public boolean isDoubleDouble1(){
+		int count = 0;
+		int index1 = -1;
+		int index2 = -1;
+
+		for(int i = 0; i < stats.length;i++){
+		
+	if(stats[i] *gamefactor >= 10){
+				count++;
+				if(index1 == -1){
+					index1 = i;
+				}else {
+					if (index2 == -1){
+					
+		index2 = i;
+					}
+				}
+				
+	
+		}
+		}
+		
+	if (count >= 2){
+		return true;
+	}
+	return false;
+	}
+
+	public String isTripleDoubleString(){
+		int count = 0;
+		int index1 = -1;
+	
+	int index2 = -1;
+		int index3 = -1;
+		String theString;
+		for(int i = 0; i < stats.length;i++){
+			if(stats[i] * gamefactor >= 10){
+		
+	
+
+	count++;
+				if(index1 == -1){
+					index1 = i;
+			
+		}else {
+					if (index2 == -1){
+						index2 = i;
+					} else {
+						if(index3 == -1){
+							index3 = i;
+						}
+					}
+				}
+				
+			}
+		}
+		if(count >= 3){
+			theString = " Triple-Double:";
+		
+	if (stats[index1] == getPts()){
+				theString+= " 10+ Pts";
+		
+			index1 = index2;
+				index2 = index3;
+			}
+			
+			if(stats[index1] == getRebs()){
+				
+				theString += " 10+ Rebs";
+			    index1 = index2;
+			}
+			if(stats[index1] == getAst()){
+				if(theString.length()> 13){
+					theString += " and 10+ Asts";
+					return theString;}
+				theString += " 10+ Asts";
+				
+			     }
+		}
+		
+		
+		
+		return null;
+	}
+	public boolean isTripleDouble(){
+		int count = 0;
+		int index1 = -1;
+		int index2 = -1;
+		int index3 = -1;
+		
+		for(int i = 0; i < stats.length;i++){
+			if(stats[i]*gamefactor >= 10){
+				count++;
+				if(index1 == -1){
+					index1 = i;
+				}else {
+					if (index2 == -1){
+				
+	
+	index2 = i;
+					} else {
+						if(index3 == -1){
+							index3 = i;
+						}
+					}
+			
+	}
+				
+			}
+		}
+		if(count >= 3){
+			return true;
+		}
+		return false;
+	}
+	public double getPts(){
+		return pts;
+		
+	}
+	public void setPts(double pts){
+	this.pts = pts;
+	stats[0]= pts;
+	}
+	public double getFGP(){
+		if (fga == -1 || fgm == -1){
+			return -1;
+		}
+		return fgm/fga;
+	}
+	public double getFTM(){
+		return ftm;
+		
+	}
+	public double getFTA(){
+		return fta;
+		
+	}
+	public double getFTP(){
+		if (fta == -1 || ftm == -1){
+			
+			return -1;
+		}
+		
+		return ftm/fta;
+		
+		
+	}
+	public double getAst(){
+		return asts;
+	
+	
+	}
+	public double getFGM(){
+		return fgm;
+
+		
+	}
+	public double getFGA(){
+		return fga;
+		
+
+	}
+	public double getThreeFGM(){
+		return threefgm;
+		
+	}
+	public double getThreeFGA(){
+		return threefga;
+		
+	}
+	public double getThreeFGP(){
+		return threefgp;
+		
+	}
+	public double getRebs(){
+		return rebs;
+	
+	
+	}
+	public double getStls(){
+		return stls;
+		
+	}
+	public double getBlks(){
+		return blks;
+		
+
+	}
+	public double getTos(){
+		return tos;
+		
+	}
+	public String getName(){
+		return name;
+	}
+	public double getGameScore(){
+		return gamescore;
+	}
+	public double getGameFactor(){
+		return gamefactor;
+	}
+	public double getAsttoTORatio()
+	{
+		return asttoratio;
+	}
+
+}
+
