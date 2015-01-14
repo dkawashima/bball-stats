@@ -1,0 +1,1163 @@
+package bbStatsPackage;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+public class Team {
+	private StatKeeper[] team;
+	private String teamname;
+
+	private String teamOname;
+	private int numofwins;
+	private int numoflosses;
+		public Team(StatKeeper[] a, String name){
+		team = a;
+		teamname = name;
+	}
+		public Team(StatKeeper[] a, String name, String name1){
+			team = a;
+			teamname = name;
+			teamOname = name1;
+			
+		}
+		
+		public String getAverageMarginofVictory(Team[] a){
+			int p = team[0].numofgames;
+	
+			int k = 0;
+			double thenumbers1 =-1;
+			double[] thenumbers = new double[p];
+			for (int i = 0; i< p; i++){
+				for(int j =0; j <p; j++){
+				
+	if(!team[0].games[j].equals(null)){
+						if (i < a.length){
+					if(team[0].games[j].getName().indexOf( a[i].getOname()) != -1){
+						
+						if (team[0].games[j].getName().equals("vs. "+ a[i].getOname())){
+					
+	thenumbers[k]=this.getSingleGamePts(team[0].games[j].getName())- a[i].getSingleGamePts("vs. " +teamOname);
+		if (thenumbers[k] > 0){
+			numofwins++;
+		} else{
+			numoflosses++;
+		}
+	k++;
+					}
+					
+	if (team[0].games[j].getName().equals("vs. "+ a[i].getOname() + " 2")){
+							thenumbers[k]=this.getSingleGamePts(team[0].games[j].getName())- a[i].getSingleGamePts("vs. " +teamOname + " 2");
+							if (thenumbers[k] > 0){
+								numofwins++;
+							} else{
+								numoflosses++;
+							}
+							k++;
+						}
+						
+					if (thenumbers1 == -1){
+						thenumbers1++;
+					}
+					if (k >= 1){
+				
+	thenumbers1 += thenumbers[k-1];}
+					}
+				}
+			}}}
+			double aver = thenumbers1/ (double)p;
+			
+			return "The average margin of victory for team is " + aver;
+			
+		}
+		public String getTeamSingleGameStats(String a){
+			 double pts1 = 0;
+			 double fgm1 = 0;
+			 double fga1= 0;
+			 double rebs1= 0;
+			 double asts1= 0;
+			 double stls1 =0 ;
+			 double blks1 = 0;
+			 double tos1 =0 ;
+			 double gmscore1= 0;
+			int p = team[0].numofgames;
+			for (int d = 0; d< team.length; d++){
+				if (team[d].numofgames != p){
+					
+				}
+			}
+			int l = team.length;
+	
+	for (int j = 0; j< l; j++){	
+			for (int i=0; i< team[j].numofgames; i++){
+			if (!team[j].games[i].equals(null)){
+				if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+				pts1 += team[j].games[i].getPts();
+			
+		fgm1+= team[j].games[i].getFGM();
+				asts1 += team[j].games[i].getAst();
+				rebs1 += team[j].games[i].getRebs();
+				fga1 += team[j].games[i].getFGA();
+				stls1 += team[j].games[i].getStls();
+				blks1 += team[j].games[i].getBlks();
+				tos1 += team[j].games[i].getTos();
+				gmscore1 += team[j].games[i].getGameScore();
+			}}}}
+			DecimalFormat df = new DecimalFormat("##.#");
+			df.setRoundingMode(RoundingMode.HALF_EVEN);
+			String averagepts1 = df.format(pts1);
+			String averagefgp1 = df.format((fgm1/fga1) * 100);
+			String averagefgm1 = df.format(fgm1);
+			String averagefga1 = df.format(fga1);
+		
+	String averagerebs1 = df.format(rebs1);
+			String averageasts1 = df.format(asts1);
+			String averagestls1 = df.format(stls1);
+			String averageblks1 = df.format(blks1);
+			String averagetos1 = df.format(tos1);
+			String averagegmscore1 = df.format(gmscore1);
+			String g = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%5s%5s%20s",teamname, averagepts1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, averagefgm1, averagefga1, a);
+		
+	return g;
+		}
+		public String getTeamAverageStats(){
+			double pts1 = 0;
+			 double fgm1 = 0;
+			 double fga1= 0;
+			 double rebs1= 0;
+		
+	 double asts1= 0;
+			 double stls1 =0 ;
+			 double blks1 = 0;
+			 double tos1 =0 ;
+			 double gmscore1= 0;
+			 String[] gmnms = new String[100];
+			int y = 0;
+			for (int j =0; j < team.length; j++){
+				if (team[j].numofgames> y){
+			
+		y = team[j].numofgames;}
+	
+		}
+			for (int z =0; z < y; z++){
+				gmnms[z] = team[0].gamenames[z];
+			}
+			
+			
+			for (int i = 0; i< y; i++){
+				pts1 += getSingleGamePts(gmnms[i]);
+				fgm1+= getSingleGameFGM(gmnms[i]);
+				asts1 += getSingleGameAst(gmnms[i]);
+				rebs1 += getSingleGameRebs(gmnms[i]);
+				fga1 += getSingleGameFGA(gmnms[i]);
+				stls1 += getSingleGameStls(gmnms[i]);
+				blks1 += getSingleGameBlks(gmnms[i]);
+				tos1 += getSingleGameTos(gmnms[i]);
+				gmscore1 += getSingleGameGMs(gmnms[i]);
+				
+			}
+			
+		
+		
+			DecimalFormat df = new DecimalFormat("##.#");
+		
+	df.setRoundingMode(RoundingMode.HALF_EVEN);
+			String averagepts1 = df.format(pts1 /(double)y );
+			String averagefgp1 = df.format((fgm1/fga1) * 100);
+			String averagefgm1 = df.format(fgm1/(double)y);
+			String averagefga1 = df.format(fga1/(double)y);
+			String averagerebs1 = df.format(rebs1/(double)y);
+			String averageasts1 = df.format(asts1/(double)y);
+			String averagestls1 = df.format(stls1/(double)y);
+			String averageblks1 = df.format(blks1/(double)y);
+			String averagetos1 = df.format(tos1/(double)y);
+			String averagegmscore1 = df.format(gmscore1/(double)y);
+			String g = String.format("%-17s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%5s%5s%5s",teamname, averagepts1, averagefgp1, averagerebs1, averageasts1, averagestls1, averageblks1, averagetos1, averagegmscore1, averagefgm1, averagefga1);
+			
+			
+			return g;
+			
+
+		}
+	
+	public static String getHighestGameScore(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamGameScore(a[i]) > maximum){
+					 maximum =Team.getHighTeamGameScore(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamGameScoreversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+			
+	df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single game score is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestGameScore(Team[] a){
+			double minimum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowestTeamGameScore(a[i]) < minimum){
+					 minimum =Team.getLowestTeamGameScore(a[i]);
+					 name = a[i].teamname;
+				
+	 versus = Team.getLowestTeamGameScoreversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(minimum);
+				return "The lowest team single game score is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestPts(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamPts(a[i]) > maximum){
+					 maximum =Team.getHighTeamPts(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamPtsversus(a[i]);
+				}
+		
+		}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single points is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestPts(Team[] a){
+			double maximum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamPts(a[i]) < maximum){
+					 maximum =Team.getLowTeamPts(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamPtsversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single points is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestFGA(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamFGA(a[i]) > maximum){
+					 maximum =Team.getHighTeamFGA(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamFGAversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single FGA is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestFGA(Team[] a){
+			double maximum = 100;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamFGA(a[i]) < maximum){
+					 maximum =Team.getLowTeamFGA(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamFGAversus(a[i]);
+				}
+		
+	}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single FGA is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestRebs(Team[] a){
+		
+	double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamRebs(a[i]) > maximum){
+					 maximum =Team.getHighTeamRebs(a[i]);
+					 name = a[i].teamname;
+				
+		 versus = Team.getHighTeamRebsversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single rebounds is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestRebs(Team[] a){
+			double maximum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamRebs(a[i]) < maximum){
+					 maximum =Team.getLowTeamRebs(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamRebsversus(a[i]);
+	
+			}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single rebounds is: " + maximum1 + " by: " + name+ " " + versus;
+		
+	}
+		public static String getHighestAst(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamAst(a[i]) > maximum){
+					 maximum =Team.getHighTeamAst(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamAstversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+			
+	df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single assists is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestAst(Team[] a){
+			double maximum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamAst(a[i]) < maximum){
+					 maximum =Team.getLowTeamAst(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamAstversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single assists is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestStls(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamStls(a[i]) > maximum){
+					 maximum =Team.getHighTeamStls(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamStlsversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single steals is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestStls(Team[] a){
+		
+	double maximum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamStls(a[i]) < maximum){
+					 maximum =Team.getLowTeamStls(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamStlsversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single steals is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestBlks(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamBlks(a[i]) > maximum){
+					 maximum =Team.getHighTeamBlks(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamBlksversus(a[i]);
+				}
+		
+	}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single blocks is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestTos(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamTOs(a[i]) > maximum){
+					 maximum =Team.getHighTeamTOs(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamTosversus(a[i]);
+				}
+			}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single turnovers is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getHighestFGP(Team[] a){
+			double maximum = -50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getHighTeamFGP(a[i]) > maximum){
+					 maximum =Team.getHighTeamFGP(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getHighTeamFGPversus(a[i]);
+				}
+			}
+				maximum *= 100;
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The highest team single FGP is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestTos(Team[] a){
+			double maximum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamTOs(a[i]) < maximum){
+					 maximum =Team.getLowTeamTOs(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamTosversus(a[i]);
+				}
+		
+	}
+				DecimalFormat df = new DecimalFormat("##.#");
+				df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single turnovers is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static String getLowestFGP(Team[] a){
+			double maximum = 50;
+			String name = null;
+			String versus = null;
+				for (int i = 0; i< a.length; i++){
+				if (Team.getLowTeamFGP(a[i]) < maximum){
+					 maximum =Team.getLowTeamFGP(a[i]);
+					 name = a[i].teamname;
+					 versus = Team.getLowTeamFGPversus(a[i]);
+				}
+			}
+				maximum *= 100;
+				DecimalFormat df = new DecimalFormat("##.#");
+			
+	df.setRoundingMode(RoundingMode.HALF_EVEN);
+				String maximum1 = df.format(maximum);
+				return "The lowest team single FGP is: " + maximum1 + " by: " + name+ " " + versus;
+			}
+		public static double getHighTeamGameScore(Team a){
+			double maximum = -50;
+		
+	int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameGMs(gmnms[i]) > maximum){
+					maximum = a.getSingleGameGMs(gmnms[i]);
+				}
+		
+		}}
+			return maximum;
+		}
+		public static double getLowestTeamGameScore(Team a){
+			double minimum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+		
+	for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameGMs(gmnms[i]) < minimum){
+					minimum = a.getSingleGameGMs(gmnms[i]);
+				}
+			}}
+			return minimum;
+		}
+		public static double getHighTeamPts(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGamePts(gmnms[i]) > maximum){
+					maximum = a.getSingleGamePts(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getLowTeamPts(Team a){
+			double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGamePts(gmnms[i]) < maximum){
+					maximum = a.getSingleGamePts(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighTeamFGA(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGA(gmnms[i]) > maximum){
+					maximum = a.getSingleGameFGA(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getLowTeamFGA(Team a){
+			double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+		
+		}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGA(gmnms[i]) < maximum){
+					maximum = a.getSingleGameFGA(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighTeamRebs(Team a){
+		
+	double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameRebs(gmnms[i]) > maximum){
+					maximum = a.getSingleGameRebs(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getLowTeamRebs(Team a){
+			double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+		
+	for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameRebs(gmnms[i]) < maximum){
+					maximum = a.getSingleGameRebs(gmnms[i]);
+			
+	}
+			}}
+		
+	return maximum;
+		}
+		public static double getHighTeamAst(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+		
+	String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameAst(gmnms[i]) > maximum){
+					maximum = a.getSingleGameAst(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getLowTeamAst(Team a){
+		
+	double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameAst(gmnms[i]) < maximum){
+					maximum = a.getSingleGameAst(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighTeamStls(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameStls(gmnms[i]) > maximum){
+					maximum = a.getSingleGameStls(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getLowTeamStls(Team a){
+			double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameStls(gmnms[i]) < maximum){
+					maximum = a.getSingleGameStls(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighTeamBlks(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+		
+	}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameBlks(gmnms[i]) > maximum){
+					maximum = a.getSingleGameBlks(gmnms[i]);
+				}
+			}}
+		
+	return maximum;
+		}
+		public static double getHighTeamTOs(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+			
+	gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameTos(gmnms[i]) > maximum){
+					maximum = a.getSingleGameTos(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getLowTeamTOs(Team a){
+			double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameTos(gmnms[i]) < maximum){
+					maximum = a.getSingleGameTos(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static double getHighTeamFGP(Team a){
+			double maximum = -50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+			
+		if (a.getSingleGameFGP(gmnms[i]) > maximum){
+					maximum = a.getSingleGameFGP(gmnms[i]);
+				}
+			}}
+		
+	return maximum;
+
+		}
+	
+	public static double getLowTeamFGP(Team a){
+			double maximum = 50;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+		
+		for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGP(gmnms[i]) < maximum){
+					maximum = a.getSingleGameFGP(gmnms[i]);
+				}
+			}}
+			return maximum;
+		}
+		public static String getHighTeamGameScoreversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameGMs(gmnms[i]) > maximum){
+					maximum = a.getSingleGameGMs(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getLowestTeamGameScoreversus(Team a){
+			double minimum = 50;
+			String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameGMs(gmnms[i]) < minimum){
+					minimum = a.getSingleGameGMs(gmnms[i]);
+					 name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getHighTeamPtsversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGamePts(gmnms[i]) > maximum){
+					maximum = a.getSingleGamePts(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getLowTeamPtsversus(Team a){
+			double maximum = 50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+		
+		}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGamePts(gmnms[i]) < maximum){
+					maximum = a.getSingleGamePts(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+	
+	}
+		public static String getHighTeamFGAversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+		
+		for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGA(gmnms[i]) > maximum){
+					maximum = a.getSingleGameFGA(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getLowTeamFGAversus(Team a){
+			double maximum = 50;
+					String name = null;
+		
+		int y = a.team[0].games.length;
+		
+	String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGA(gmnms[i]) < maximum){
+					maximum = a.getSingleGameFGA(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getHighTeamRebsversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameRebs(gmnms[i]) > maximum){
+					maximum = a.getSingleGameRebs(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getLowTeamRebsversus(Team a){
+			double maximum = 50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameRebs(gmnms[i]) < maximum){
+					maximum = a.getSingleGameRebs(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getHighTeamAstversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameAst(gmnms[i]) > maximum){
+				
+	maximum = a.getSingleGameAst(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getLowTeamAstversus(Team a){
+			double maximum = 50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+			
+	if (a.team[0].games[i] != null){
+				if (a.getSingleGameAst(gmnms[i]) < maximum){
+					maximum = a.getSingleGameAst(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getHighTeamStlsversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+			
+	gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameStls(gmnms[i]) > maximum){
+					maximum = a.getSingleGameStls(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+	
+	}
+		public static String getLowTeamStlsversus(Team a){
+			double maximum = 50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameStls(gmnms[i]) < maximum){
+					maximum = a.getSingleGameStls(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getHighTeamBlksversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+			
+	gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameBlks(gmnms[i]) > maximum){
+					maximum = a.getSingleGameBlks(gmnms[i]);
+					name = gmnms[i];
+			
+		}
+			}}
+			return name;
+		}
+		public static String getHighTeamTosversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameTos(gmnms[i]) > maximum){
+					maximum = a.getSingleGameTos(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+	
+	}
+		public static String getLowTeamTosversus(Team a){
+			double maximum = 50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+			
+		if (a.team[0].games[i] != null){
+				if (a.getSingleGameTos(gmnms[i]) < maximum){
+					maximum = a.getSingleGameTos(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getHighTeamFGPversus(Team a){
+			double maximum = -50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGP(gmnms[i]) > maximum){
+					maximum = a.getSingleGameFGP(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public static String getLowTeamFGPversus(Team a){
+			double maximum = 50;
+					String name = null;
+			int y = a.team[0].games.length;
+			String[] gmnms = new String[100];
+			for (int z =0; z < y; z++){
+				gmnms[z] = a.team[0].gamenames[z];
+			}
+			for (int i =0; i< a.team[0].numofgames; i++){
+				if (a.team[0].games[i] != null){
+				if (a.getSingleGameFGP(gmnms[i]) < maximum){
+					maximum = a.getSingleGameFGP(gmnms[i]);
+					name = gmnms[i];
+				}
+			}}
+			return name;
+		}
+		public double getSingleGamePts(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getPts();}}}
+	
+	}
+			return pts1;
+		}
+		public double getSingleGameFGM(String a){
+		
+		double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getFGM();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameFGP(String a){
+			return getSingleGameFGM(a)/getSingleGameFGA(a);
+		}
+		public double getSingleGameFGA(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getFGA();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameAst(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getAst();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameRebs(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getRebs();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameStls(String a){
+		
+		double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getStls();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameBlks(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getBlks();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameTos(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+			
+	if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getTos();}}}
+		}
+			return pts1;
+		}
+		public double getSingleGameGMs(String a){
+			double pts1 =0;
+			int l = team.length;
+			for (int j = 0; j< l; j++){	
+				for (int i=0; i< team[j].numofgames; i++){
+				if (!team[j].games[i].equals(null)){
+					if (a.equals(team[j].games[i].getName()) && !(team[j].games[i].getName().equals(null))){
+					pts1 += team[j].games[i].getGameScore();}}}
+		}
+			return pts1;
+		}
+		public String getOname(){
+			return teamOname;
+		}
+		public int getWins(){
+			return numofwins;
+		}
+		public int getLosses(){
+			return numoflosses;
+		}
+	
+	public String getName(){
+			return teamname;
+		}
+}
+
